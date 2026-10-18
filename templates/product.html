@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block content %}<section class="formbox" style="max-width:850px">
+{% if item.image_url %}<img src="{{ item.image_url }}" alt="{{ item.name }}" style="width:100%;max-height:450px;object-fit:contain;background:#f8f2f4;border-radius:12px">{% else %}<div class="placeholder" style="height:260px">✦</div>{% endif %}
+<div class="tag" style="margin-top:18px">{{ item.category }}</div><h1>{{ item.name }}</h1><p class="price">KSh {{ "{:,.2f}".format(item.price) }}</p>
+{% if item.sizes %}<p><b>Available sizes:</b> {{ item.sizes }}</p>{% endif %}<p>{{ item.description or "Message us for more information about this item." }}</p>
+<div class="actions">{% if whatsapp %}<a class="button" target="_blank" rel="noopener" href="https://wa.me/{{ whatsapp }}?text={{ ('Hello Fashion Shop, I would like to order ' ~ item.name ~ ('. Size: ' ~ item.sizes if item.sizes else ''))|urlencode }}">Order on WhatsApp</a>{% endif %}<a class="button" href="{{ url_for('index') }}" style="background:#51464a">Continue shopping</a></div></section>{% endblock %}

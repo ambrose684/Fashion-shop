@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block content %}<div class="eyebrow">Your catalogue</div><h1 style="font-size:2.4rem">Manage products</h1>
+<form class="formbox" method="post" action="{{ url_for('add_product') }}"><h2>Add a new item</h2>
+<label for="name">Product name *</label><input id="name" name="name" required maxlength="120" placeholder="e.g. Classic denim jacket">
+<label for="category">Category</label><select id="category" name="category"><option>Clothes</option><option>Shoes</option><option>Bags</option><option>Accessories</option></select>
+<label for="price">Price (KSh) *</label><input id="price" name="price" type="number" min="0" step="0.01" required>
+<label for="sizes">Sizes or available options</label><input id="sizes" name="sizes" placeholder="e.g. S, M, L, XL or sizes 38–44">
+<label for="description">Description</label><textarea id="description" name="description" rows="3" maxlength="1500" placeholder="Colour, material, fit, delivery details…"></textarea>
+<label for="image_url">Public product image URL (optional)</label><input id="image_url" name="image_url" type="url" placeholder="https://example.com/product.jpg">
+<p><button type="submit">Add product</button> <a class="button" style="background:#51464a" href="{{ url_for('index') }}">View shop</a></p></form>
+<h2>Products currently listed ({{ products|length }})</h2>
+{% if products %}<section class="grid">{% for p in products %}<article class="card"><div class="cardbody"><div class="tag">{{ p.category }}</div><h2>{{ p.name }}</h2><div class="price">KSh {{ "{:,.2f}".format(p.price) }}</div><form method="post" action="{{ url_for('delete_product', product_id=p.id) }}" onsubmit="return confirm('Remove this item?')"><button style="background:#9b2e3f">Remove</button></form></div></article>{% endfor %}</section>{% else %}<p class="muted">No products yet. Add your first item above.</p>{% endif %}
+<p style="margin-top:25px"><a href="{{ url_for('logout') }}">Log out</a></p>{% endblock %}

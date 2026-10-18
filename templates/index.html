@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block content %}
+<section class="hero"><div class="eyebrow">New looks · Everyday style</div><h1>Find your next<br>favourite look.</h1>
+<p class="muted">Shop clothes, shoes, bags and accessories. Choose your items, then order online or message us on WhatsApp.</p>
+<form class="search" method="get"><input name="q" value="{{ q }}" placeholder="Search fashion items…"><button>Search</button></form></section>
+<div class="filters"><a class="{{ 'active' if not category else '' }}" href="{{ url_for('index', q=q) }}">All items</a>{% for c in categories %}<a class="{{ 'active' if category==c else '' }}" href="{{ url_for('index', category=c, q=q) }}">{{ c }}</a>{% endfor %}</div>
+{% if products %}<section class="grid">{% for p in products %}<article class="card">
+{% if p.image_url %}<img src="{{ p.image_url }}" alt="{{ p.name }}" loading="lazy">{% else %}<div class="placeholder">✦</div>{% endif %}
+<div class="cardbody"><div class="tag">{{ p.category }}</div><h2>{{ p.name }}</h2><div class="price">KSh {{ "{:,.2f}".format(p.price) }}</div>
+{% if p.sizes %}<p class="muted">Sizes: {{ p.sizes }}</p>{% endif %}
+<div class="actions"><a class="button" href="{{ url_for('product', product_id=p.id) }}">View item</a>{% if whatsapp %}<a class="button" target="_blank" rel="noopener" href="https://wa.me/{{ whatsapp }}?text={{ ('Hello Fashion Shop, I am interested in ' ~ p.name)|urlencode }}">WhatsApp</a>{% endif %}</div>
+</div></article>{% endfor %}</section>{% else %}<section class="formbox"><h2>Your fashion store is ready to fill</h2><p>Add your first clothes, shoes, bags or accessories through the product manager. Your products will appear here.</p><a class="button" href="{{ url_for('admin') }}">Add products</a></section>{% endif %}
+{% endblock %}
