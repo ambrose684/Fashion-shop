@@ -19,10 +19,14 @@ def save_products(products):
     DATA_FILE.write_text(json.dumps(products, indent=2, ensure_ascii=False), encoding="utf-8")
 
 def shop_name():
-    return os.environ.get("SHOP_NAME", "Fashion Shop")
+    return os.environ.get("SHOP_NAME", "FLEX AND FIT")
 
-def whatsapp_number():
-    return "".join(ch for ch in os.environ.get("WHATSAPP_NUMBER", "") if ch.isdigit())
+def whatsapp_numbers():
+    numbers = [
+        "".join(ch for ch in os.environ.get("WHATSAPP_NUMBER", "254780572505") if ch.isdigit()),
+        "".join(ch for ch in os.environ.get("WHATSAPP_NUMBER_2", "254798230681") if ch.isdigit()),
+    ]
+    return [number for number in numbers if number]
 
 def admin_required():
     return session.get("admin") is True
@@ -38,14 +42,14 @@ def index():
         products = [p for p in products if p.get("category") == category]
     categories = ["Clothes", "Shoes", "Bags", "Accessories"]
     return render_template("index.html", products=products, q=q, category=category,
-                           categories=categories, shop_name=shop_name(), whatsapp=whatsapp_number())
+                           categories=categories, shop_name=shop_name(), whatsapp_numbers=whatsapp_numbers())
 
 @app.route("/product/<product_id>")
 def product(product_id):
     item = next((p for p in get_products() if p["id"] == product_id), None)
     if item is None:
         abort(404)
-    return render_template("product.html", item=item, shop_name=shop_name(), whatsapp=whatsapp_number())
+    return render_template("product.html", item=item, shop_name=shop_name(), whatsapp_numbers=whatsapp_numbers())
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():

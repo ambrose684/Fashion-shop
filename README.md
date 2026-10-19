@@ -1,4 +1,4 @@
-# Fashion Shop (Python + Flask)
+# FLEX AND FIT (Python + Flask)
 
 This starter shop is configured for a fashion catalogue with clothes, shoes, bags and accessories. It supports product search/category filters, product detail pages, sizes, WhatsApp order links, and a simple password-protected product manager.
 
@@ -11,8 +11,8 @@ This starter shop is configured for a fashion catalogue with clothes, shoes, bag
    py -m venv .venv
    .venv\Scripts\activate
    pip install -r requirements.txt
-   set SHOP_NAME=Fashion Shop
-   set WHATSAPP_NUMBER=2547XXXXXXXX
+   set SHOP_NAME=FLEX AND FIT
+   set WHATSAPP_NUMBER=254780572505 and WHATSAPP_NUMBER_2=254798230681
    set ADMIN_PASSWORD=choose-a-strong-password
    set SECRET_KEY=use-a-long-random-secret
    python app.py
